@@ -1,0 +1,37 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en" ng-app="pollsApp">
+<head>
+    <title>Nineteenth | Polls Sample</title>
+    <base href="/"/>
+    <meta charset="utf-8" />
+
+</head>
+<body>
+
+<div ui-view></div>
+
+<script type="text/javascript" src="{{ STATIC_URL }}components/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}components/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}components/bower_components/angular-resource/angular-resource.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}components/bower_components/angular-route/angular-route.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}components/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}polls_app/js/app.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}polls_app/js/services.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}polls_app/js/controllers.js"></script>
+
+
+<script>
+    angular
+            .module('pollsApp.services')
+            .factory('AuthUser', function() {
+                return {
+                    id: "{{ request.user.id|default:''}}",
+                }
+            });
+</script>
+
+</body>
+</html>
