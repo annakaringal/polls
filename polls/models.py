@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Poll(models.Model):
@@ -27,3 +28,12 @@ class Choice(models.Model):
 
     def __unicode__(self):  # Python 3: def __str__(self):
         return self.choice_text
+
+class Vote(models.Model):
+    poll = models.ForeignKey(Poll)
+    choice = models.ForeignKey(Choice)
+    user = models.ForeignKey(User)
+    timestamp = models.DateTimeField(default=datetime.datetime.now)
+
+    def __unicode__(self): 
+        return unicode(self.choice)
