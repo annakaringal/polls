@@ -20,6 +20,17 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
 
+class AllView(generic.ListView):
+    template_name = 'polls/all.html'
+
+    def get_queryset(self):
+        """
+        Return all existing (not including those set to be
+        published in the future).
+        """
+        return Poll.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')
 
 class DetailView(generic.DetailView):
     model = Poll
