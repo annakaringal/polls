@@ -72,12 +72,23 @@ def vote(request, poll_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
+        if request.user.is_authenticated():
+            selected_choice.votes += 1
+            selected_choice.save()
+
+            vote = Vote(user=request.user, poll=p, choice=selected_choice)
+            vote.save()
+
+            # Always return an HttpResponseRedirect after successfully dealing
+            # with POST data. This prevents data from being posted twice if a
+            # user hits the Back button.
+            return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
+        else:
+            return render(request, 'polls/detail.html', {
+                'poll': p,
+                'error_message': "You must be logged in to vote",
+            })
+
 
 class pollsAngularApp(generic.TemplateView):
     template_name = 'base.html'
