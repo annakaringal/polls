@@ -4,7 +4,8 @@ from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from django.views import generic
 
-from .models import Choice, Poll
+from .models import Choice, Poll, Vote
+from django.contrib.auth.models import User
 
 
 class IndexView(generic.ListView):
@@ -31,6 +32,18 @@ class AllView(generic.ListView):
         return Poll.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')
+
+class AnsweredView(generic.ListView):
+    template_name = 'polls/answered.html'
+    context_object_name = 'user_list'
+
+    def get_queryset(self):
+        """
+        Return all users who have submitted polls
+        """
+        return User.objects.exclude(
+            vote__isnull=True
+        )
 
 class DetailView(generic.DetailView):
     model = Poll
