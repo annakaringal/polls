@@ -1,6 +1,11 @@
 <h1>{{user_object.username}}</h1>
-<ul>
-  {% for vote in user_object.vote_set.all %}
-      <li><a href="{% url 'polls:detail' vote.poll.id %}">{{vote.poll}}</a> -- {{vote.choice}}</li>
-  {% endfor %}
-</ul>
+
+{% if user_object.vote_set.exists %}
+  <ul>
+    {% for vote in user_object.vote_set.all %}
+        <li><a href="{% url 'polls:detail' vote.poll.id %}">{{vote.poll}}</a> -- {{vote.choice}}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <em>{{user_object.username}} hasn't voted on any polls</em>
+{% endif %}
