@@ -5,17 +5,15 @@
 <form action="{% url 'polls:vote' poll.id %}" method="post">
 {% csrf_token %}
 {% for choice in poll.choice_set.all %}
-    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"
-          {% if existing_vote %}
-            disabled
-          {% endif %} />
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" 
+    {% if existing_vote %} disabled {% endif %}/>
     <label for="choice{{ forloop.counter }}"/>{{ choice.choice_text }}  
         {% if existing_vote.choice == choice %}
            -- <em>You voted for {{choice.choice_text}}</em>
         {% endif %}
         </label><br />
 {% endfor %}
-{% if existing_vote %}
-  <input type="submit" value="Vote"/>
+{% if not existing_vote %}
+  <input type="submit" value="Vote" />
 {% endif %}
 </form>
