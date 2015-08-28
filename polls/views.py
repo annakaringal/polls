@@ -119,5 +119,23 @@ def new(request):
         'choice_formset': choice_formset,
     })
 
+def add(request, poll_id):
+    poll = get_object_or_404(Poll, pk=poll_id)
+    if request.user.is_authenticated():
+        user = request.user
+        if request.POST: 
+            form = ChoiceForm(request.POST)
+            if form.is_valid():
+                new_choice = form.save(commit=False)
+                new_choice.poll = poll
+                new_choice.user = user
+                new_choice.save()
+                return HttpResponseRedirect(reverse('polls:detail', args=(poll.id,)))
+    else: 
+        return render(request, 'polls/detail.html', {
+                'poll': poll,
+                'error_message': "You must be logged in to submit a new choice",
+            })
+
 class pollsAngularApp(generic.TemplateView):
     template_name = 'base.html'
