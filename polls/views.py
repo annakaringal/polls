@@ -58,8 +58,9 @@ class DetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
-        context['existing_vote'] = Vote.objects.filter(user=self.request.user, poll=self.get_object()).first()
+        context['existing_vote'] = Vote.objects.filter(user=self.request.user.id, poll=self.get_object()).first()
         context['choice_form'] = ChoiceForm()
+        context['authenticated_user'] = self.request.user.is_authenticated()
         return context
 
 
