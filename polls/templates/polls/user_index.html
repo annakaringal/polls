@@ -2,11 +2,6 @@
   <ul>
     {% for user in user_list %}
       <li>{{user.username}}</li>
-        <ul>
-          {% for vote in user.vote_set.all %}
-              <li><a href="{% url 'polls:detail' vote.poll.id %}">{{vote.poll}}</a> -- {{vote.choice}}</li>
-          {% endfor %}
-        </ul>
     {% endfor %}
-  </ul>
+  </ul> 
 {% endif %}
