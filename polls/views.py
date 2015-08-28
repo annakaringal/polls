@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.views import generic
 
 from .models import Choice, Poll, Vote
-from .forms import PollForm, ChoiceFormSet
+from .forms import PollForm, ChoiceFormSet, ChoiceForm
 from django.contrib.auth.models import User
 
 
@@ -59,6 +59,7 @@ class DetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
         context['existing_vote'] = Vote.objects.filter(user=self.request.user, poll=self.get_object()).first()
+        context['choice_form'] = ChoiceForm()
         return context
 
 
