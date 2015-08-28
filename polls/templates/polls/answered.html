@@ -4,7 +4,7 @@
       <li>{{user.username}}</li>
         <ul>
           {% for vote in user.vote_set.all %}
-              <li>{{vote.poll}} -- {{vote.choice}}</li>
+              <li><a href="{% url 'polls:detail' vote.poll.id %}">{{vote.poll}}</a> -- {{vote.choice}}</li>
           {% endfor %}
         </ul>
     {% endfor %}
