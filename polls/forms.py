@@ -12,3 +12,8 @@ class PollForm(ModelForm):
     class Meta:
         model = Poll
         fields = ['question',]
+
+class ChoiceForm(ModelForm):
+    class Meta:
+        model = Choice
+        fields = ['choice_text',]
