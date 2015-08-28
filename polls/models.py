@@ -25,7 +25,7 @@ class Choice(models.Model):
     poll = models.ForeignKey(Poll)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True, blank=True, default=None)
 
     def __unicode__(self):  # Python 3: def __str__(self):
         return self.choice_text
