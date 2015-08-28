@@ -102,7 +102,14 @@ def vote(request, poll_id):
 
 def new(request):
     if request.POST: 
-        pass
+        form = PollForm(request.POST)
+        if form.is_valid():
+            poll = form.save(commit=False)
+            choice_formset = ChoiceFormSet(request.POST, instance=poll)
+            if choice_formset.is_valid():
+                poll.save()
+                choice_formset.save()
+                return HttpResponseRedirect(reverse('polls:detail', args=(poll.id,)))
     else:
         form = PollForm()
         choice_formset = ChoiceFormSet(instance=Poll())
