@@ -34,8 +34,8 @@ class AllView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')
 
-class AnsweredView(generic.ListView):
-    template_name = 'polls/answered.html'
+class UserIndexView(generic.ListView):
+    template_name = 'polls/user_index.html'
     context_object_name = 'user_list'
 
     def get_queryset(self):
