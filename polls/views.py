@@ -40,11 +40,9 @@ class UserIndexView(generic.ListView):
 
     def get_queryset(self):
         """
-        Return all users who have submitted polls
+        Return all users
         """
-        return User.objects.exclude(
-            vote__isnull=True
-        )
+        return User.objects.all()
 
 class UserDetailView(generic.DetailView):
     model = User
