@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.views import generic
 
 from .models import Choice, Poll, Vote
+from .forms import PollForm, ChoiceFormSet
 from django.contrib.auth.models import User
 
 
@@ -99,6 +100,16 @@ def vote(request, poll_id):
                 'error_message': "You must be logged in to vote",
             })
 
+def new(request):
+    if request.POST: 
+        pass
+    else:
+        form = PollForm()
+        choice_formset = ChoiceFormSet(instance=Poll())
+    return render(request, 'polls/new.html', {
+        'form': form,
+        'choice_formset': choice_formset,
+    })
 
 class pollsAngularApp(generic.TemplateView):
     template_name = 'base.html'
