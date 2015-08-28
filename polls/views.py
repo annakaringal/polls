@@ -46,6 +46,11 @@ class UserIndexView(generic.ListView):
             vote__isnull=True
         )
 
+class UserDetailView(generic.DetailView):
+    model = User
+    template_name = 'polls/user_detail.html'
+    context_object_name = 'user_object'
+
 class DetailView(generic.DetailView):
     model = Poll
     template_name = 'polls/detail.html'
