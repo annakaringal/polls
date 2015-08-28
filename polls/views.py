@@ -78,7 +78,8 @@ def vote(request, poll_id):
         })
     else:
         if request.user.is_authenticated():
-            if Vote.objects.filter(user=request.user, poll=p).exists():
+            user = request.user
+            if Vote.objects.filter(user=user, poll=p).exists():
                 return render(request, 'polls/detail.html', {
                                 'poll': p,
                                 'error_message': "You have already voted in this poll",
@@ -86,7 +87,7 @@ def vote(request, poll_id):
             else: 
                 selected_choice.votes += 1
                 selected_choice.save()
-                vote = Vote(user=request.user, poll=p, choice=selected_choice)
+                vote = Vote(user=user, poll=p, choice=selected_choice)
                 vote.save()
                 # Always return an HttpResponseRedirect after successfully dealing
                 # with POST data. This prevents data from being posted twice if a
