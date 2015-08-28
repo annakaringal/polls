@@ -15,5 +15,7 @@
         {% endif %}
         </label><br />
 {% endfor %}
-<input type="submit" value="Vote" />
+{% if existing_vote %}
+  <input type="submit" value="Vote"/>
+{% endif %}
 </form>
