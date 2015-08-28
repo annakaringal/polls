@@ -55,6 +55,11 @@ class DetailView(generic.DetailView):
         """
         return Poll.objects.filter(pub_date__lte=timezone.now())
 
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        context['existing_vote'] = Vote.objects.filter(user=self.request.user, poll=self.get_object()).first()
+        return context
+
 
 class ResultsView(generic.DetailView):
     model = Poll
